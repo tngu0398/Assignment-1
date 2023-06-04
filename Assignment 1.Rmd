@@ -24,11 +24,13 @@ pop1 <- pop %>%
   rename("Country" = "Country.name", 
          "Population_under_age_15" = "Population.of.children.under.the.age.of.15", 
          "Population_between_age_15_and_64" = "Population.aged.15.to.64.years", 
-         "Population_above_age_64" = "pop65plus",
-         "Africa" = "Africa UN)",
-         "Asia" = "Asia (UN)",
-         "Europe" = "Europe (UN)") %>%
-  filter(Country %in% c("Africa (UN)", "Asia (UN)", "Australia", "Europe (UN)", "United States", "World"))
+         "Population_above_age_64" = "pop65plus") %>%
+  mutate(Country = case_when(
+    Country == "Africa (UN)" ~ "Africa",
+    Country == "Asia (UN)" ~ "Asia",
+    Country == "Europe (UN)" ~ "Europe",
+    TRUE ~ Country)) %>%
+  filter(Country %in% c("Africa", "Asia", "Australia", "Europe", "United States", "World"))
 ```
 
 
