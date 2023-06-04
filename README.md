@@ -15,3 +15,5 @@ Description of changes made to project and any files associated.
 6. Removed any countries with "(UN)" in their names. 
 
 7. Changed title and date of r markdown file. 
+
+8. Conflict resolved - Description of readme file between main and Version1.1 was different
