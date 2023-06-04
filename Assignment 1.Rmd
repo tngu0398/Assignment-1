@@ -9,12 +9,25 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Loading Libaries
 
-```{r global, include=FALSE}
+```{r global}
 library(tidyverse)
 library(knitr)
 library(scales)
+```
 
+# Research Question
+
+Mankind has significantly advanced over the years specifically within the medical and technological areas. With this in mind, has human advancement improved the survivability of mankind? 
+
+# Data Set Introduction
+
+The data set contains a population across different age groups for a significant number of countries from 1950 to 2021.The data was sourced from [Our World at Data](https://ourworldindata.org/world-population-growth). 
+
+In order to investigate the effects of human advancement on the population, the variables in the below table will be used. By using three different age groups, we can identify any trends in the number of the young (under age 15), the middle (ages 15-64) and the old (above age 64) from 1950 across the major countries. These age groups were selected as it is somewhat believed the young and old are the more vulnerable and if human advancement has helped them survive. 
+
+```{r}
 pop <- read.csv("Data/population-and-demography.csv")
 
 pop$pop65plus <- pop$Population - pop$Population.aged.15.to.64.years - pop$Population.of.children.under.the.age.of.15
@@ -31,27 +44,12 @@ pop1 <- pop %>%
     Country == "Europe (UN)" ~ "Europe",
     TRUE ~ Country)) %>%
   filter(Country %in% c("Africa", "Asia", "Australia", "Europe", "United States", "World"))
-```
 
-
-# Research Question
-
-Mankind has significantly advanced over the years especially within the medical and technological areas. With this in mind, has human advancement improved the survivability of mankind? 
-
-# Data Set Introduction
-
-The data set contains a population across different age groups for a significant number of countries from 1950 to 2021.The data was sourced from [Our World at Data](https://ourworldindata.org/world-population-growth). 
-
-In order to investigate the effects of human advancement on the population, the variables in the below table will be used. By using three different age groups, we can identify any trends in the number of the young (under age 15), the middle (ages 15-64) and the old (above age 64) from 1950 across the major countries. These age groups were selected as it is somewhat believed the young and old are the more vulnerable and if human advancement has helped them survive. 
-
-```{r, echo=FALSE}
 var <- names(pop1)
 var_df <- data.frame(Variable_Names = var)
 var1 <- kable(var_df)
 print(var1)
-
 ```
-
 
 # Data Set Description
 
@@ -76,21 +74,19 @@ Note: The "Population above 64" was created by calculating the difference betwee
 
 After wrangling the data set to only include the desired data, there are `r dim(pop1)[2]` variables and `r dim(pop1)[1]` observations. 
 
-```{r, echo=FALSE}
+```{r}
 knitr::include_graphics("Image/section4code.PNG")
 ```
 
 As below, the type of each variables are shown. Country is a character variable. Year and the population variables are all numerical variables but year and Population_under_age_15 are integer variables meaning they represent whole numbers without decimals. The other are numeric variables which can be both integer and decimal numbers but for the context of this analysis, it does not make any difference. 
 
-```{r, echo=FALSE}
+```{r}
 str(head(pop1, n = 2))
 ```
 
-
 # Data Summary
 
-
-```{r, echo=FALSE}
+```{r}
 sum_stats <- pop1 %>%
   group_by(Country) %>%
   summarise(mean_pop_under_15 = mean(Population_under_age_15),
@@ -107,17 +103,17 @@ Upon observation of the data summary above, Asia has the **largest** mean and va
 
 # Visualisations
 
-```{r, echo=FALSE}
-
-
+```{r}
 ggplot(data = pop1, aes(x = Year)) +
   geom_line(aes(y = Population_above_age_64, color = "Population above age 64")) +
   geom_line(aes(y = Population_under_age_15, color = "Population under age 15")) +
   geom_line(aes(y = Population_between_age_15_and_64, color = "Population between age 15 and 64")) +
-  labs(x = "Year", y = "Population", title = "Populations of Countries Over Time", color = "Population Type") +
+  labs(x = "Year", y = "Population", 
+       title = "Populations of Countries Over Time", color = "Population Type") +
   scale_color_manual(values = c("dark blue", "dark orange", "turquoise"),
                      labels = c("Population age < 15", "Populationn age 15-64", "Population age > 64"),
-                     breaks = c("Population under age 15", "Population between age 15 and 64", "Population above age 64")) +
+                     breaks = c("Population under age 15", "Population between age 15 and 64",
+                                "Population above age 64")) +
   theme(legend.position = "right", plot.title = element_text(hjust = 0.5)) +
   facet_wrap(~ Country, scales = "free_y", ncol = 2) +
   scale_y_continuous(labels = comma)
@@ -127,6 +123,27 @@ ggplot(data = pop1, aes(x = Year)) +
 * _For all countries and population where the age is above 64, there are noticeable upward curves towards 2020 indicating human advancement has in fact increased the population age above 64._
 * _Among all the countries above, the population is generally increasing over the time however Europe does not appear to follow this trend._
 
+```{r}
+pop1_long <- tidyr::gather(pop1, AgeGroup, Population, -Country, -Year)
+
+ggplot(pop1_long, aes(x = Year, y = Population, fill = AgeGroup)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("turquoise", "dark orange", "dark blue"),
+                    labels = c("Population age > 64", "Populationn age 15-64", 
+                               "Population age < 15")) +
+  labs(x = "Year", y = "Population", fill = "Age Group",
+       title = "Bar Graph of Populations Over Time") +
+  theme(legend.position = "right", plot.title = element_text(hjust = 0.5)) +
+  facet_wrap(~ Country, scales = "free_y", ncol = 2) +
+  scale_y_continuous(labels = comma)
+
+```
+
+Although the above figure is similar to the previous figure where it is a line graph, the above figure shows a bar graph of the total population split into each age group per year. It provides a better illustration of each age group compared among each country. As discovered previously, it can be seen again in Africa that each age group has increased in size and thus increasing the overall population. For all countries, it is also evident that COVID-19 has had a significant effect on the population in 2020 and 2021 as there is a slight dip or no increase across all age groups. Excluding Africa, in age group below age 15, the population seems rather horizontal with very minimal incline. This may be due to couples not having children and other related factors. However, there is an obvious increase the population for above age 64.
+
 # Conclusions
 
-From the data and visualisations, it is apparent that human advancement has definitely made an effect on the population of the world from 1950 to 2021. However, for Europe, there appears to be significant factors affecting the population as it appears the population under age 15 has decreased over the period. Although the population under age 15 in other countries does not seem to have a steady trend, there is still an upward trend overall. Africa has a uniform upward trend in their population indicating improvements in medical care and other various factors. Furthermore, for the overall world, with enhancements in medicines and technology, the population is still increasing in all 3 age groups. 
+From the data and visualisations, it is apparent that human advancement has definitely made an effect on the population of the world from 1950 to 2021. However, for Europe, there appears to be significant factors affecting the population as it appears the population under age 15 has decreased over the period. Although the population under age 15 in other countries does not seem to have a steady trend, there is still an upward trend overall. Africa has a uniform upward trend in their population indicating improvements in medical care and other various factors. Although there are numerous factors not taken into consideration such as COVID-19, international conflicts and natural disasters, for the overall world with enhancements in medicines and technology, the population is still increasing in all 3 age groups.
+
+## Reference List
+* Roser, M., Ortiz-Ospina, E., Ritchie, H., & Rodés-Guirao, L. (2013). _World Population Growth._ Our World in Data. https://ourworldindata.org/world-population-growth
