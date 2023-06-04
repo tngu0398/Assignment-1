@@ -53,8 +53,6 @@ print(var1)
 
 # Data Set Description
 
-For the purpose of the 
-
 The original data contains `r dim(pop)[2]` variables and `r dim(pop)[1]` observations. For the purpose of the research question, only the major countries will be analysed:
 
 1. Africa
