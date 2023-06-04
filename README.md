@@ -11,3 +11,5 @@
 5. Changed code formatting for easier readability. 
 
 6. Removed any countries with "(UN)" in their names. 
+
+7. Changed title and date of r markdown file. 

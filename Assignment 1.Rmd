@@ -1,7 +1,7 @@
 ---
-title: "Assignment 1"
+title: "Assignment 1: Project proposal"
 author: "Tony Nguyen"
-date: "2023-05-28"
+date: "2023-06-04"
 output: html_document
 ---
 
