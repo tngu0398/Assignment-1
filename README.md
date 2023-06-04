@@ -1,6 +1,6 @@
 # Assignment-1
 Change History 
-Description of changes made to the project and any files associated.
+Description of changes made to project and any files associated.
 
 1. Connected github and Rstudio cloud
 
