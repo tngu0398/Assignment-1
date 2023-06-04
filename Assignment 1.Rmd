@@ -29,7 +29,7 @@ pop1 <- pop %>%
 
 # Research Question
 
-Mankind has significantly advanced over the years especially within the medical and technological areas. With this in mind, has human advancement increased the survivability of mankind? 
+Mankind has significantly advanced over the years especially within the medical and technological areas. With this in mind, has human advancement improved the survivability of mankind? 
 
 # Data Set Introduction
 
