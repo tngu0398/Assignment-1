@@ -7,3 +7,7 @@
 3. Changed line graph of population under age 15 from blue to dark blue
 
 4. Made changes to research question
+
+5. Changed code formatting for easier readability. 
+
+6. Removed any countries with "(UN)" in their names. 

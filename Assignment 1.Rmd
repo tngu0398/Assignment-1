@@ -21,8 +21,13 @@ pop$pop65plus <- pop$Population - pop$Population.aged.15.to.64.years - pop$Popul
 
 pop1 <- pop %>%
   select(Country.name, Year, Population.of.children.under.the.age.of.15, Population.aged.15.to.64.years, pop65plus) %>%
-  rename("Country" = "Country.name", "Population_under_age_15" = "Population.of.children.under.the.age.of.15", 
-         "Population_between_age_15_and_64" = "Population.aged.15.to.64.years",  "Population_above_age_64" = "pop65plus") %>%
+  rename("Country" = "Country.name", 
+         "Population_under_age_15" = "Population.of.children.under.the.age.of.15", 
+         "Population_between_age_15_and_64" = "Population.aged.15.to.64.years", 
+         "Population_above_age_64" = "pop65plus",
+         "Africa" = "Africa UN)",
+         "Asia" = "Asia (UN)",
+         "Europe" = "Europe (UN)") %>%
   filter(Country %in% c("Africa (UN)", "Asia (UN)", "Australia", "Europe (UN)", "United States", "World"))
 ```
 
