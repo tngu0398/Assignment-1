@@ -108,7 +108,7 @@ ggplot(data = pop1, aes(x = Year)) +
   geom_line(aes(y = Population_under_age_15, color = "Population under age 15")) +
   geom_line(aes(y = Population_between_age_15_and_64, color = "Population between age 15 and 64")) +
   labs(x = "Year", y = "Population", title = "Populations of Countries Over Time", color = "Population Type") +
-  scale_color_manual(values = c("blue", "dark orange", "turquoise"),
+  scale_color_manual(values = c("dark blue", "dark orange", "turquoise"),
                      labels = c("Population age < 15", "Populationn age 15-64", "Population age > 64"),
                      breaks = c("Population under age 15", "Population between age 15 and 64", "Population above age 64")) +
   theme(legend.position = "right", plot.title = element_text(hjust = 0.5)) +
