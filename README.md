@@ -17,3 +17,5 @@ Description of changes made to project and any files associated.
 7. Changed title and date of r markdown file. 
 
 8. Conflict resolved - Description of readme file between main and Version1.1 was different
+
+9. Updated graph and adjusted reported as per project requirements
